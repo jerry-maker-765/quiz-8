@@ -1,0 +1,25 @@
+set.seed(123)  # Ensure reproducibility
+
+# Simulate independent variables
+n <- 100  # Number of observations
+earth <- rnorm(n, mean = 50, sd = 10)
+fire <- rnorm(n, mean = 30, sd = 5)
+wind <- rnorm(n, mean = 20, sd = 4)
+water <- rnorm(n, mean = 40, sd = 7)
+
+# Simulate dependent variable 'heart' as a function of the others plus random noise
+beta_earth <- 2
+beta_fire <- -1
+beta_wind <- 1.5
+beta_water <- 0.5
+noise <- rnorm(n, mean = 0, sd = 5)  # Random noise
+
+heart <- beta_earth*earth + beta_fire*fire + beta_wind*wind + beta_water*water + noise
+
+# Combine into a data frame
+data <- data.frame(earth, fire, wind, water, heart)
+
+model <- lm(heart ~ earth + fire + wind + water, data = data)
+
+# Display the summary of the model
+summary(model)
