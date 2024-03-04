@@ -1,0 +1,27 @@
+install.packages("rstanarm")
+
+library(ggplot2)
+library(rstanarm)
+set.seed(344) 
+
+# Simulated data
+n <- 500 # Number of observations
+AgeGroup <- factor(sample(c('18-24', '25-34', '35-44', '45-54', '55-64', '65+'), n, replace = TRUE))
+IncomeGroup <- factor(sample(c('Low', 'Medium', 'High'), n, replace = TRUE))
+EducationLevel <- factor(sample(c('No High School', 'High School', 'Some College', 'Bachelor', 'Postgraduate'), n, replace = TRUE))
+Support <- rbinom(n, 1, prob=0.5) # Random binary outcome
+
+df <- data.frame(Support, AgeGroup, IncomeGroup, EducationLevel)
+
+ggplot(df, aes(x=AgeGroup, fill=factor(Support))) +
+  geom_bar(position="fill") +
+  scale_fill_manual(values=c('0'='red', '1'='blue'), labels=c('No', 'Yes')) +
+  labs(title="Proportion of Political Party Support by Age Group",
+       x="Age Group", y="Proportion", fill="Support") +
+  theme_minimal()
+
+model <- stan_glm(Support ~ AgeGroup + IncomeGroup + EducationLevel, 
+                  data = df, 
+                  family = binomial(link = "logit"))
+
+print(summary(model))
