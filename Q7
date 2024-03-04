@@ -2,10 +2,10 @@ set.seed(123)  # Ensure reproducibility
 
 # Simulate independent variables
 n <- 100  # Number of observations
-earth <- rnorm(n, mean = 50, sd = 10)
-fire <- rnorm(n, mean = 30, sd = 5)
-wind <- rnorm(n, mean = 20, sd = 4)
-water <- rnorm(n, mean = 40, sd = 7)
+earth <- rnorm(n, mean = 70, sd = 10)
+fire <- rnorm(n, mean = 20, sd = 5)
+wind <- rnorm(n, mean = 40, sd = 4)
+water <- rnorm(n, mean = 60, sd = 7)
 
 # Simulate dependent variable 'heart' as a function of the others plus random noise
 beta_earth <- 2
